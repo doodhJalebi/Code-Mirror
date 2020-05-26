@@ -117,7 +117,3 @@ def Difference(MTa, MTb, aTophash, bTophash):
                         set(childB.keys()) - set(childA.keys()))
                     Difference(MTa, MTb, hash, differencehash[0])
 
-
-a = merkletree(r"C:\Users\ridak\OneDrive\Desktop\Project")
-b = merkletree(r'C:\Users\ridak\OneDrive\Desktop\Project - Copy')
-Difference(a, b, a.root_hash, b.root_hash)
