@@ -130,7 +130,7 @@ class merkletree:
         # folder name (parent) is hashed
 
 
-def Difference(MTa, MTb, aTophash, bTophash):
+def Difference(MTa, MTb, aTophash, bTophash): #MTa -> primary folder, MTb -> secondary folder
     # Will compare the two Merkel Tree and their root hash to check if they contain same content or not
     if aTophash == bTophash:
         # if hashes of both files are same
@@ -150,10 +150,10 @@ def Difference(MTa, MTb, aTophash, bTophash):
                 # if hash of particular file a in childA has the same filename as value in ChildB[hash]
                 # continue the matching until any difference noticed
                 if childB[hash] == filename:
-                    print("Unchanged: ", filename)
+                    print("Unchanged: ", os.path.join(MTa.root, filename))
             except:
                 # else print the filename where changes have occured
-                print("Changed: ", filename)
+                print("Changed: ", os.path.join(MTa.root, filename))
                 temp = MTa.merkletree[hash]
                 if len(temp[1]) > 0:
                     differencehash = list(
@@ -162,10 +162,4 @@ def Difference(MTa, MTb, aTophash, bTophash):
                     Difference(MTa, MTb, hash, differencehash[0])
 
 
-#a = merkletree(r"C:\Users\LENOVO\Downloads\niha\a")
-#b = merkletree(r"C:\Users\LENOVO\Downloads\niha\b")
-#print(a.merkletree)
-#print(a.root_hash)
-# print('-----------------------------')
-#print(b.merkletree)
-# Difference(a, b, a.root_hash, b.root_hash)
+
