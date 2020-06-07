@@ -4,6 +4,7 @@ import os
 import hashlib
 # Python Library for generating secure hash
 
+change_list=[]
 
 class merkletree:
     def __init__(self, root_directory):
@@ -153,13 +154,14 @@ def Difference(MTa, MTb, aTophash, bTophash): #MTa -> primary folder, MTb -> sec
                     print("Unchanged: ", os.path.join(MTa.root, filename))
             except:
                 # else print the filename where changes have occured
-                print("Changed: ", os.path.join(MTa.root, filename))
+                change_list.append(filename)
+                print("Changed: ", filename)
                 temp = MTa.merkletree[hash]
                 if len(temp[1]) > 0:
                     differencehash = list(
                         set(childB.keys()) - set(childA.keys()))
                     # continue finding changes that are changed (have diff hash) after one file (if there exist any)
-                    Difference(MTa, MTb, hash, differencehash[0])
-
-
+                    if differencehash!=[]:
+                        Difference(MTa, MTb, hash, differencehash[0])
+    return change_list
 
