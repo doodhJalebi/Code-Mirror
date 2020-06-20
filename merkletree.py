@@ -6,6 +6,7 @@ import hashlib
 
 change_list=[]
 
+
 class merkletree:
     def __init__(self, root_directory):
         
@@ -167,5 +168,5 @@ def Difference(MTa, MTb, aTophash, bTophash): #MTa -> primary folder, MTb -> sec
                     # continue finding changes that are changed (have diff hash) after one file (if there exist any)
                     if differencehash!=[]:
                         Difference(MTa, MTb, hash, differencehash[0])
+    #print(change_list)
     return change_list
-
