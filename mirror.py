@@ -1,6 +1,8 @@
 import shutil
 import time
-import merkletree
+from merkletree import merkletree
+from merkletree import Difference
+import os
 
 
 def mirror(src_dir,dst_dir):
@@ -8,8 +10,13 @@ def mirror(src_dir,dst_dir):
     dst=merkletree(dst_dir)
     changes=Difference(src,dst,src.root_hash,dst.root_hash)
     for filename in changes:
-        shutil.rmtree(os.path.join(dst_dir, filename))
-        shutil.copytree(os.path.join(src_dir,filename), os.path.join(dst_dir, filename))
+        if os.path.exists(os.path.join(dst_dir,filename))==True:
+            shutil.rmtree(os.path.join(dst_dir, filename))
+        if os.path.isdir(os.path.join(src_dir,filename))==True:
+            shutil.copytree(os.path.join(src_dir,filename), os.path.join(dst_dir, filename))
+        if os.path.isfile(os.path.join(src_dir,filename))==True:
+            shutil.copy(os.path.join(src_dir,filename), os.path.join(dst_dir, filename))
+        
         #os.popen('copy '+ os.path.join(src_dir,filename)+ os.path.join(dst_dir, filename))
     time.sleep(5)
     
