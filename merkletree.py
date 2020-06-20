@@ -154,8 +154,12 @@ def Difference(MTa, MTb, aTophash, bTophash): #MTa -> primary folder, MTb -> sec
                     print("Unchanged: ", os.path.join(MTa.root, filename))
             except:
                 # else print the filename where changes have occured
-                change_list.append(filename)
+                if (os.path.isdir(os.path.join(MTb.root, filename))==False) or (os.path.isdir(os.path.join(MTa.root,filename))==False):
+                    change_list.append(filename)
                 print("Changed: ", filename)
+                #print(change_list)
+                #print(os.path.isdir(os.path.join(MTb.root, filename)))
+                #print(os.path.isdir(os.path.join(MTa.root,filename)))
                 temp = MTa.merkletree[hash]
                 if len(temp[1]) > 0:
                     differencehash = list(
