@@ -40,7 +40,7 @@ def showAbout():
     about_window = tk.Tk()
     about_window.minsize(300, 200)
     about_window.maxsize(300, 200)
-    about_window.title('Settings')
+    about_window.title('About')
     about_window.config(bg=BACKGROUND_COLOR)
 
 
