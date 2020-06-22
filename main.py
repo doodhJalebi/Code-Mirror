@@ -36,20 +36,12 @@ frameB.pack(side=tk.LEFT, fill=tk.BOTH)
 frameC.pack(side=tk.LEFT, fill=tk.BOTH)
 
 
-""" menubar = tk.Menu(window)
-window.config(menu=menubar)
-
-file_menu = tk.Menu(menubar)
-file_menu.add_command(label='Settings')
-file_menu.add_command(label='Exit')
-
-help_menu = tk.Menu(menubar)
-help_menu.add_command(label='About')
-
-
-menubar.add_cascade(label='File', menu=file_menu)
-menubar.add_cascade(label='Help', menu=help_menu)
- """
+def showAbout():
+    about_window = tk.Tk()
+    about_window.minsize(300, 200)
+    about_window.maxsize(300, 200)
+    about_window.title('Settings')
+    about_window.config(bg=BACKGROUND_COLOR)
 
 
 src_button = tk.Button(frameC, text='Choose Source')
@@ -61,7 +53,7 @@ dst_button.place(width=120, height=40, x=40, y=70)
 settings_button = tk.Button(menubar_frame, text='Settings')
 settings_button.place(width=50, height=22, x=5, y=1)
 
-about_button = tk.Button(menubar_frame, text='About')
+about_button = tk.Button(menubar_frame, text='About', command=showAbout)
 about_button.place(width=50, height=22, x=60, y=1)
 
 
