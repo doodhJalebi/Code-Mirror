@@ -10,6 +10,11 @@ BUTTON_FOREGROUND = 'white'
 listboxA_data = ['rida.py', 'niha.dhakkan', 'bahzad.docx', 'owais.txt']
 listboxB_data = ['rida.py', 'niha.dhakkan', 'bahzad.docx']
 
+global_settings = {
+    'sync_frequency' : 5,
+    'on_startup' : False,
+    'min_to_tray' : False
+}
 
 
 ##### BEGIN GUI
@@ -37,7 +42,7 @@ frameC.pack(side=tk.LEFT, fill=tk.BOTH)
 
 
 def showAbout():
-    about_window = tk.Tk()
+    about_window = tk.Toplevel(window)
     about_window.minsize(300, 200)
     about_window.maxsize(300, 200)
     about_window.title('About')
@@ -52,11 +57,37 @@ def showAbout():
     body_label.place(width=150, height=100, x=75, y=60)
 
 def showSettings():
-    settings_window = tk.Tk()
-    settings_window.minsize(300, 200)
-    settings_window.maxsize(300, 200)
+    settings_window = tk.Toplevel(window)
+    settings_window.minsize(400, 200)
+    settings_window.maxsize(400, 200)
     settings_window.title('Settings')
     settings_window.config(bg=BACKGROUND_COLOR)
+
+    slider_label = tk.Label(settings_window, text='Sync after: (mins)')
+    slider_label.place(width=100, height=15, x=10, y=60)
+    slider_label.config(bg=BACKGROUND_COLOR, fg='white')
+
+    slider = tk.Scale(settings_window, from_=1, to=30, orient=tk.HORIZONTAL)
+    slider.place(width=200, height=50, x=190, y=40)
+    slider.config(bg=BACKGROUND_COLOR, fg='white', highlightthickness=0, troughcolor=BUTTON_BACKGROUND, activebackground=BACKGROUND_COLOR)
+    
+    startup_label = tk.Label(settings_window, text='Run at startup:')
+    startup_label.place(width=100, height=15, x=2, y=100)
+    startup_label.config(bg=BACKGROUND_COLOR, fg='white')
+
+    var1 = tk.IntVar()
+    checkbox1 = tk.Checkbutton(settings_window, variable=var1)
+    checkbox1.place(width=20, height=20, x=190, y=100)
+    checkbox1.config(bg=BACKGROUND_COLOR, activebackground=BACKGROUND_COLOR)
+
+    
+
+    def settings_onclose():
+        global_settings['sync_frequency'] = slider.get()
+        global_settings['on_startup'] = bool(var1.get())
+        settings_window.destroy()
+
+    settings_window.protocol("WM_DELETE_WINDOW", settings_onclose)
 
 
 src_button = tk.Button(frameC, text='Choose Source')
