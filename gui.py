@@ -109,12 +109,16 @@ def update_dst_listbox():
 def choose_src():
     folder_selected = filedialog.askdirectory()
     global_settings['src_folder'] = folder_selected
-    update_src_listbox()
+
+    if folder_selected != '':
+        update_src_listbox()
 
 def choose_dst():
     folder_selected = filedialog.askdirectory()
     global_settings['dst_folder'] = folder_selected
-    update_dst_listbox()
+    
+    if folder_selected != '':
+        update_dst_listbox()
 
 def showAbout():
     about_window = tk.Toplevel(window)
