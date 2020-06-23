@@ -182,12 +182,13 @@ settings_button.place(width=50, height=22, x=5, y=1)
 about_button = tk.Button(menubar_frame, text='About', command=showAbout)
 about_button.place(width=50, height=22, x=60, y=1)
 
-
+start_stop_button = tk.Button(frameC, text='Start')
+start_stop_button.place(width=120, height=40, x=40, y= 150)
 
 
 #-------------------SYNC STATUS LABEL + IMAGE-------------------------------------
 sync_status_label = tk.Label(frameC, text='Sync Status:', anchor='w', padx=8)
-sync_status_label.place(width=120, height=25, x=40, y=250)
+sync_status_label.place(width=120, height=25, x=40, y=235)
 
 sync_label_tick = Image.open("tick.png").resize((20, 20), Image.ANTIALIAS)
 tick_image = ImageTk.PhotoImage(sync_label_tick)
@@ -229,6 +230,8 @@ frameC.config(bg=BACKGROUND_COLOR)
 
 src_button.config(bg=BUTTON_BACKGROUND, fg=BUTTON_FOREGROUND, activebackground=BUTTON_BACKGROUND, activeforeground=BUTTON_FOREGROUND, highlightbackground=BACKGROUND_COLOR, highlightcolor=BACKGROUND_COLOR)
 dst_button.config(bg=BUTTON_BACKGROUND, fg=BUTTON_FOREGROUND, activebackground=BUTTON_BACKGROUND, activeforeground=BUTTON_FOREGROUND, highlightbackground=BACKGROUND_COLOR, highlightcolor=BACKGROUND_COLOR)
+
+start_stop_button.config(bg=BUTTON_BACKGROUND, fg=BUTTON_FOREGROUND, activebackground=BUTTON_BACKGROUND, activeforeground=BUTTON_FOREGROUND, highlightbackground=BACKGROUND_COLOR, highlightcolor=BACKGROUND_COLOR)
 
 sync_status_label.config(bg=BUTTON_BACKGROUND, fg=BUTTON_FOREGROUND)
 
