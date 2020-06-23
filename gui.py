@@ -28,15 +28,24 @@ global_settings = {
 }
 
 #--------------------- MIRROR LOGIC IN THREAD ------------------
-def begin_mirror(number):
-    print("args recieved:", number)
+def begin_mirror(global_settings, run):
+    
+    print(run())
+    
     while True:
-        print("tick tock")
-        sleep(1)
+        
+        if run():
+            
+            while True:
+                sleep(1)
+                print("Tick tock")
+                
+                if not run():
+                    break
     
 
-x = threading.Thread(target=begin_mirror, args=(1,), daemon=True)
-
+mirror_thread = threading.Thread(target=begin_mirror, args=(global_settings, (lambda : MIRRORING),), daemon=True)
+mirror_thread.start()
 
 #--------------------- BEGIN GUI -------------------------------
 
@@ -65,10 +74,13 @@ frameC.pack(side=tk.LEFT, fill=tk.BOTH)
 #---------------- BUTTON CALLBACK FUNCTIONS -----------------------------
 def check_requirements():
     global MIRRORING
+
     if MIRRORING == False and global_settings['src_folder'] != '' and global_settings['dst_folder'] != '':
         # Program isn't running. SRC and DST folders have been chosen. We can begin.
         start_stop_button.config(text='Stop')
         MIRRORING = True
+        
+        
     
     elif MIRRORING == True:
         # Stop mirroring.
