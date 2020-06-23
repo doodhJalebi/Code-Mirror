@@ -29,7 +29,8 @@ global_settings = {
 
 #--------------------- MIRROR LOGIC IN THREAD ------------------
 def begin_mirror(global_settings, run):
-    
+    """Thread function that will start an event loop to check for changes in the MIRRORING flag and
+    start/stop the process accordingly."""
     print(run())
     
     while True:
@@ -73,11 +74,17 @@ frameC.pack(side=tk.LEFT, fill=tk.BOTH)
 
 #---------------- BUTTON CALLBACK FUNCTIONS -----------------------------
 def check_requirements():
+    """Triggers the Mirroring process given all requirements have been fulfilled.
+    
+    Checks if all requirements for starting the mirroring process are present or not.
+    If so, it will set the MIRRORING flag to true, indicating to an already running thread
+    that it can begin the process in parallel to the GUI."""
     global MIRRORING
 
     if MIRRORING == False and global_settings['src_folder'] != '' and global_settings['dst_folder'] != '':
-        # Program isn't running. SRC and DST folders have been chosen. We can begin.
+        # Mirroring isn't running. SRC and DST folders have been chosen. We can begin.
         start_stop_button.config(text='Stop')
+        sync_status_image.config(image=syncing_image)
         MIRRORING = True
         
         
@@ -85,9 +92,11 @@ def check_requirements():
     elif MIRRORING == True:
         # Stop mirroring.
         start_stop_button.config(text='Start')
+        sync_status_image.config(image=stopped_image)
         MIRRORING = False
 
 def update_src_listbox():
+    """Reads content of src folder and populates the listbox accordingly."""
     src_content = listdir(global_settings['src_folder'])
     
     for i in range(len(src_content)):
@@ -111,6 +120,7 @@ def update_src_listbox():
         src_listbox.insert(tk.END, item)
 
 def update_dst_listbox():
+    """Reads content of dst folder and populates the listbox accordingly."""
     dst_content = listdir(global_settings['dst_folder'])
 
     for i in range(len(dst_content)):
@@ -133,6 +143,7 @@ def update_dst_listbox():
         dst_listbox.insert(tk.END, item)
 
 def choose_src():
+    """Opens the askdirectory dialog box to prompt the user to choose a src directory."""
     folder_selected = filedialog.askdirectory()
     global_settings['src_folder'] = folder_selected
 
@@ -140,6 +151,7 @@ def choose_src():
         update_src_listbox()
 
 def choose_dst():
+    """Opens the askdirectory dialog box to prompt the user to choose a dst directory."""
     folder_selected = filedialog.askdirectory()
     global_settings['dst_folder'] = folder_selected
     
@@ -147,6 +159,7 @@ def choose_dst():
         update_dst_listbox()
 
 def showAbout():
+    """Initializes and sets up a new TopLevel widget with the 'About' information."""
     about_window = tk.Toplevel(window)
     about_window.minsize(300, 200)
     about_window.maxsize(300, 200)
@@ -164,6 +177,7 @@ def showAbout():
     body_label.place(width=150, height=100, x=75, y=60)
 
 def showSettings():
+    """Initializes and sets up a new TopLevel widget prompting the user to change application settings."""
     settings_window = tk.Toplevel(window)
     settings_window.minsize(400, 200)
     settings_window.maxsize(400, 200)
@@ -226,7 +240,10 @@ tick_image = ImageTk.PhotoImage(sync_label_tick)
 sync_label_syncing = Image.open("syncing.png").resize((20, 20), Image.ANTIALIAS)
 syncing_image = ImageTk.PhotoImage(sync_label_syncing)
 
-sync_status_image = tk.Label(sync_status_label, image=syncing_image)
+sync_label_stopped = Image.open("stopped.png").resize((20, 20), Image.ANTIALIAS)
+stopped_image = ImageTk.PhotoImage(sync_label_stopped)
+
+sync_status_image = tk.Label(sync_status_label, image=stopped_image)
 sync_status_image.place(width=20, height=20, x=90, y=0)
 
 
