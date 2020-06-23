@@ -23,6 +23,7 @@ window = tk.Tk()
 window.minsize(SCREEN_WIDTH, SCREEN_HEIGHT)
 window.maxsize(SCREEN_WIDTH, SCREEN_HEIGHT)
 window.title('Code Mirror')
+window.iconphoto(True, tk.PhotoImage(file='icon2.png'))
 #window.attributes('-transparentcolor', 'white')
 
 # Menubar frame
@@ -80,7 +81,7 @@ def showSettings():
     checkbox1.place(width=20, height=20, x=190, y=100)
     checkbox1.config(bg=BACKGROUND_COLOR, activebackground=BACKGROUND_COLOR)
 
-    
+
 
     def settings_onclose():
         global_settings['sync_frequency'] = slider.get()
