@@ -41,19 +41,3 @@ def mirror(src_dir,dst_dir):
 
     time.sleep(1)
     
-
-a_dir=r"C:\Users\DELL 5559\Desktop\a"
-b_dir=r"C:\Users\DELL 5559\Desktop\b"
-a = merkletree(a_dir)
-b = merkletree(b_dir)
-print(a.merkletree)
-print(a.root_hash)
-print('-----------------------------')
-print(b.merkletree)
-print(Difference(a, b, a.root_hash, b.root_hash))
-
-while True:
-    change_list=[]
-    #change_list_deletion=[]
-    mirror(a_dir,b_dir)
-
