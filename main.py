@@ -43,6 +43,21 @@ def showAbout():
     about_window.title('About')
     about_window.config(bg=BACKGROUND_COLOR)
 
+    heading_label = tk.Label(about_window, text='Code Mirror is a simple application that allows you to\nkeep two directories in sync!')
+    heading_label.config(bg=BACKGROUND_COLOR, fg='white', font='Segoe 9 italic')
+    heading_label.place(width=290, height=40, x=5, y=10)
+
+    body_label = tk.Label(about_window, text="Designed & developed by:\n\nNiha Karim Momin\nOwais Bin Asad\nRida Zahid Khan\nBahzad Ahmed Badvi")
+    body_label.config(bg=BACKGROUND_COLOR, fg='white', font='Segoe 9 italic')
+    body_label.place(width=150, height=100, x=75, y=60)
+
+def showSettings():
+    settings_window = tk.Tk()
+    settings_window.minsize(300, 200)
+    settings_window.maxsize(300, 200)
+    settings_window.title('Settings')
+    settings_window.config(bg=BACKGROUND_COLOR)
+
 
 src_button = tk.Button(frameC, text='Choose Source')
 src_button.place(width=120, height=40, x=40, y=10)
@@ -50,7 +65,7 @@ src_button.place(width=120, height=40, x=40, y=10)
 dst_button = tk.Button(frameC, text='Choose Destination')
 dst_button.place(width=120, height=40, x=40, y=70)
 
-settings_button = tk.Button(menubar_frame, text='Settings')
+settings_button = tk.Button(menubar_frame, text='Settings', command=showSettings)
 settings_button.place(width=50, height=22, x=5, y=1)
 
 about_button = tk.Button(menubar_frame, text='About', command=showAbout)
