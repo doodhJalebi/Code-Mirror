@@ -2,12 +2,17 @@
 import tkinter as tk
 from PIL import Image, ImageTk
 from tkinter import filedialog
+from os import listdir
 
+#----------------- GLOBAL VARIABLES ---------------------
 SCREEN_WIDTH = 650
 SCREEN_HEIGHT = 400
 BACKGROUND_COLOR = '#0f0f0f'
 BUTTON_BACKGROUND = '#1c1c1c'
 BUTTON_FOREGROUND = 'white'
+
+
+
 listboxA_data = ['rida.py', 'niha.dhakkan', 'bahzad.docx', 'owais.txt']
 listboxB_data = ['rida.py', 'niha.dhakkan', 'bahzad.docx']
 
@@ -19,16 +24,16 @@ global_settings = {
 }
 
 
-##### BEGIN GUI
+#--------------------- BEGIN GUI -------------------------------
 
 window = tk.Tk()
 window.minsize(SCREEN_WIDTH, SCREEN_HEIGHT)
 window.maxsize(SCREEN_WIDTH, SCREEN_HEIGHT)
 window.title('Code Mirror')
 window.iconphoto(True, tk.PhotoImage(file='icon2.png'))
-#window.attributes('-transparentcolor', 'white')
 
-# Menubar frame
+
+#--------------- MAKESHIFT MENUBAR -----------------------
 menubar_frame = tk.Frame(window, height=25, width=650)
 menubar_frame.pack()
 
@@ -44,13 +49,60 @@ frameB.pack(side=tk.LEFT, fill=tk.BOTH)
 frameC.pack(side=tk.LEFT, fill=tk.BOTH)
 
 #---------------- BUTTON CALLBACK FUNCTIONS -----------------------------
+def update_src_listbox():
+    src_content = listdir(global_settings['src_folder'])
+    
+    for i in range(len(src_content)):
+        if '.' not in src_content[i]:
+            src_content[i] += '/'
+        
+        if len(src_content[i]) > 20:
+            if '/' in src_content[i]:
+                src_content[i] = src_content[i][:20]
+                src_content[i] += '.../'
+            
+            elif '.' in src_content[i]:
+                extension = src_content[i][src_content[i].index('.'):]
+                src_content[i] = src_content[i][:20]
+                src_content[i] += '...'
+                src_content[i] += extension
+
+    src_listbox.delete(0,tk.END)
+    
+    for item in src_content:
+        src_listbox.insert(tk.END, item)
+
+def update_dst_listbox():
+    dst_content = listdir(global_settings['dst_folder'])
+
+    for i in range(len(dst_content)):
+        if '.' not in dst_content[i]:
+            dst_content[i] += '/'
+        
+        if len(dst_content[i]) > 20:
+            if '/' in dst_content[i]:
+                dst_content[i] = dst_content[i][:20]
+                dst_content[i] += '.../'
+            
+            elif '.' in dst_content[i]:
+                extension = dst_content[i][dst_content[i].index('.'):]
+                dst_content[i] = dst_content[i][:20]
+                dst_content[i] += '...'
+                dst_content[i] += extension
+
+    dst_listbox.delete(0,tk.END)
+    for item in dst_content:
+        dst_listbox.insert(tk.END, item)
+
 def choose_src():
     folder_selected = filedialog.askdirectory()
     global_settings['src_folder'] = folder_selected
+    update_src_listbox()
 
 def choose_dst():
     folder_selected = filedialog.askdirectory()
     global_settings['dst_folder'] = folder_selected
+    update_dst_listbox()
 
 def showAbout():
     about_window = tk.Toplevel(window)
@@ -104,6 +156,7 @@ def showSettings():
 
     settings_window.protocol("WM_DELETE_WINDOW", settings_onclose)
 
+
 #-----------------BUTTONS OF THE GUI-------------------------------------------------
 src_button = tk.Button(frameC, text='Choose Source', command=choose_src)
 src_button.place(width=120, height=40, x=40, y=10)
@@ -141,8 +194,6 @@ src_listbox = tk.Listbox(frameA)
 src_listbox.place(width=180, height=250, x=10, y=10)
 src_listbox.config(justify=tk.CENTER)
 
-for item in listboxA_data:
-    src_listbox.insert(tk.END, item)
 
 src_label = tk.Label(frameA, text='Source Folder')
 src_label.place(width=120, height=20, x=40, y=270)
@@ -152,8 +203,6 @@ dst_listbox = tk.Listbox(frameB)
 dst_listbox.place(width=180, height=250, x=10, y=10)
 dst_listbox.config(justify=tk.CENTER)
 
-for item in listboxB_data:
-    dst_listbox.insert(tk.END, item)
 
 dst_label = tk.Label(frameB, text='Destination Folder')
 dst_label.place(width=120, height=20, x=40, y=270)
