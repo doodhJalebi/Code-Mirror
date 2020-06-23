@@ -18,6 +18,8 @@ BUTTON_FOREGROUND = 'white'
 listboxA_data = ['rida.py', 'niha.dhakkan', 'bahzad.docx', 'owais.txt']
 listboxB_data = ['rida.py', 'niha.dhakkan', 'bahzad.docx']
 
+MIRRORING = False # False: program stopped | True: program running
+
 global_settings = {
     'sync_frequency' : 5,
     'on_startup' : False,
@@ -61,6 +63,18 @@ frameB.pack(side=tk.LEFT, fill=tk.BOTH)
 frameC.pack(side=tk.LEFT, fill=tk.BOTH)
 
 #---------------- BUTTON CALLBACK FUNCTIONS -----------------------------
+def check_requirements():
+    global MIRRORING
+    if MIRRORING == False and global_settings['src_folder'] != '' and global_settings['dst_folder'] != '':
+        # Program isn't running. SRC and DST folders have been chosen. We can begin.
+        start_stop_button.config(text='Stop')
+        MIRRORING = True
+    
+    elif MIRRORING == True:
+        # Stop mirroring.
+        start_stop_button.config(text='Start')
+        MIRRORING = False
+
 def update_src_listbox():
     src_content = listdir(global_settings['src_folder'])
     
@@ -186,7 +200,7 @@ settings_button.place(width=50, height=22, x=5, y=1)
 about_button = tk.Button(menubar_frame, text='About', command=showAbout)
 about_button.place(width=50, height=22, x=60, y=1)
 
-start_stop_button = tk.Button(frameC, text='Start')
+start_stop_button = tk.Button(frameC, text='Start', command=check_requirements)
 start_stop_button.place(width=120, height=40, x=40, y= 150)
 
 
