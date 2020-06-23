@@ -46,10 +46,10 @@ def mirror(src_dir,dst_dir):
         #os.popen('copy '+ os.path.join(src_dir,filename)+ os.path.join(dst_dir, filename))
     
     for filename in changes_deletion:
-        if os.path.isdir(os.path.join(src_dir,filename)):
-            shutil.rmtree(os.path.join(src_dir, filename))
-        if os.path.isfile(os.path.join(src_dir,filename)):
-            os.unlink(os.path.join(src_dir, filename))
+        if os.path.isdir(os.path.join(dst_dir,filename)):
+            shutil.rmtree(os.path.join(dst_dir, filename))
+        if os.path.isfile(os.path.join(dst_dir,filename)):
+            os.unlink(os.path.join(dst_dir, filename))
 
     time.sleep(1)
     
