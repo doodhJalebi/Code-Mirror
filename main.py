@@ -49,6 +49,8 @@ def showAbout():
     about_window.title('About')
     about_window.config(bg=BACKGROUND_COLOR)
 
+    about_window.grab_set()
+
     heading_label = tk.Label(about_window, text='Code Mirror is a simple application that allows you to\nkeep two directories in sync!')
     heading_label.config(bg=BACKGROUND_COLOR, fg='white', font='Segoe 9 italic')
     heading_label.place(width=290, height=40, x=5, y=10)
@@ -63,6 +65,8 @@ def showSettings():
     settings_window.maxsize(400, 200)
     settings_window.title('Settings')
     settings_window.config(bg=BACKGROUND_COLOR)
+
+    settings_window.grab_set()
 
     slider_label = tk.Label(settings_window, text='Sync after: (mins)')
     slider_label.place(width=100, height=15, x=10, y=60)
