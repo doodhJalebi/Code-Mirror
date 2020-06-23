@@ -3,6 +3,8 @@ import tkinter as tk
 from PIL import Image, ImageTk
 from tkinter import filedialog
 from os import listdir
+import threading
+from time import sleep
 
 #----------------- GLOBAL VARIABLES ---------------------
 SCREEN_WIDTH = 650
@@ -22,6 +24,16 @@ global_settings = {
     'src_folder' : '',
     'dst_folder' : ''
 }
+
+#--------------------- MIRROR LOGIC IN THREAD ------------------
+def begin_mirror(number):
+    print("args recieved:", number)
+    while True:
+        print("tick tock")
+        sleep(1)
+    
+
+x = threading.Thread(target=begin_mirror, args=(1,), daemon=True)
 
 
 #--------------------- BEGIN GUI -------------------------------
@@ -172,9 +184,10 @@ about_button.place(width=50, height=22, x=60, y=1)
 
 
 
+
 #-------------------SYNC STATUS LABEL + IMAGE-------------------------------------
 sync_status_label = tk.Label(frameC, text='Sync Status:', anchor='w', padx=8)
-sync_status_label.place(width=120, height=40, x=40, y=250)
+sync_status_label.place(width=120, height=25, x=40, y=250)
 
 sync_label_tick = Image.open("tick.png").resize((20, 20), Image.ANTIALIAS)
 tick_image = ImageTk.PhotoImage(sync_label_tick)
@@ -183,7 +196,7 @@ sync_label_syncing = Image.open("syncing.png").resize((20, 20), Image.ANTIALIAS)
 syncing_image = ImageTk.PhotoImage(sync_label_syncing)
 
 sync_status_image = tk.Label(sync_status_label, image=syncing_image)
-sync_status_image.place(width=20, height=20, x=90, y=7)
+sync_status_image.place(width=20, height=20, x=90, y=0)
 
 
 
