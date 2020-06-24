@@ -85,6 +85,9 @@ def check_requirements():
         # Mirroring isn't running. SRC and DST folders have been chosen. We can begin.
         start_stop_button.config(text='Stop')
         sync_status_image.config(image=syncing_image)
+        src_button.config(state=tk.DISABLED)
+        dst_button.config(state=tk.DISABLED)
+        settings_button.config(state=tk.DISABLED)
         MIRRORING = True
         
         
@@ -93,6 +96,9 @@ def check_requirements():
         # Stop mirroring.
         start_stop_button.config(text='Start')
         sync_status_image.config(image=stopped_image)
+        src_button.config(state=tk.NORMAL)
+        dst_button.config(state=tk.NORMAL)
+        settings_button.config(state=tk.NORMAL)
         MIRRORING = False
 
 def update_src_listbox():
