@@ -39,6 +39,8 @@ def begin_mirror(global_settings, run):
             while True:
                 sleep(1)
                 mirror(global_settings['src_folder'], global_settings['dst_folder'])
+                update_src_listbox()
+                update_dst_listbox()
 
                 
                 if not run():
