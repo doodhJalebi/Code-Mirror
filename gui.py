@@ -5,6 +5,7 @@ from tkinter import filedialog
 from os import listdir
 import threading
 from time import sleep
+from mirror import *
 
 #----------------- GLOBAL VARIABLES ---------------------
 SCREEN_WIDTH = 650
@@ -15,8 +16,6 @@ BUTTON_FOREGROUND = 'white'
 
 
 
-listboxA_data = ['rida.py', 'niha.dhakkan', 'bahzad.docx', 'owais.txt']
-listboxB_data = ['rida.py', 'niha.dhakkan', 'bahzad.docx']
 
 MIRRORING = False # False: program stopped | True: program running
 
@@ -39,7 +38,8 @@ def begin_mirror(global_settings, run):
             
             while True:
                 sleep(1)
-                print("Tick tock")
+                mirror(global_settings['src_folder'], global_settings['dst_folder'])
+
                 
                 if not run():
                     break
