@@ -68,15 +68,3 @@ def mirror(src_dir, dst_dir):
             os.unlink(os.path.join(dst_dir, filename))
             #removing files from dst that need to be deleted
 
-    time.sleep(1)
-
-
-a_dir = r"C:\Users\DELL 5559\Desktop\a"
-b_dir = r"C:\Users\DELL 5559\Desktop\b"
-
-
-while True:
-    try:
-        mirror(a_dir, b_dir)
-    except:
-        pass
