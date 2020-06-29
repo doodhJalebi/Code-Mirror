@@ -7,6 +7,7 @@ import hashlib
 
 import time
 
+extensions = ['.jpeg', '.gif', '.jpg', '.tif', '.png', '.docx', '.pdf']
 
 class merkletree:
     def __init__(self, root_directory):
@@ -86,7 +87,8 @@ class merkletree:
             lst = os.listdir(dir)
             # ... it'll make a list containing the names of the entries (file/es) in the directory given by path
             for i in lst:
-                if i != "__pycache__":
+                extension = os.path.splitext(i)[1]
+                if i != "__pycache__" and extension not in extensions:
                     temp.append(i)
             temp.sort()
         return temp
