@@ -77,6 +77,8 @@ class merkletree:
                 temp = ''
                 for subfile in subfiles:
                     temp += self.hashes[os.path.join(file, subfile)]
+                if not subfiles:
+                    temp += file
                 if root_directory == self.root:
                     self.hashes[file] = self.hasher(temp)
                 else:
@@ -127,10 +129,7 @@ def Difference(MTa, MTb, aTophash, bTophash, change_list: list):
                 # else print the filename where changes have occured
                 if (os.path.isdir(os.path.join(MTb.root, filename)) == False) or (os.path.isdir(os.path.join(MTa.root, filename)) == False):
                     change_list.append(filename)
-                # print("Changed: ", filename)
-                # print(change_list)
-                #print(os.path.isdir(os.path.join(MTb.root, filename)))
-                # print(os.path.isdir(os.path.join(MTa.root,filename)))
+                print("Changed: ", filename)
                 temp = MTa.merkletree[hash]
                 if len(temp[1]) > 0:
                     differencehash = list(
@@ -141,11 +140,3 @@ def Difference(MTa, MTb, aTophash, bTophash, change_list: list):
                                    differencehash[0], change_list)
     # print(change_list)
     return change_list
-
-
-a_dir = r"C:\Users\USER\Desktop\a"
-b_dir = r"C:\Users\USER\Desktop\b"
-
-a = merkletree(a_dir)
-b = merkletree(b_dir)
-print(a.merkletree)
