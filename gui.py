@@ -21,7 +21,6 @@ MIRRORING = False # False: program stopped | True: program running
 
 global_settings = {
     'sync_frequency' : 5,
-    'on_startup' : False,
     'src_folder' : '',
     'dst_folder' : ''
 }
@@ -192,47 +191,18 @@ def showSettings():
 
     settings_window.grab_set()
 
-    slider_label = tk.Label(settings_window, text='Sync after: (mins)')
-    slider_label.place(width=100, height=15, x=10, y=60)
+    slider_label = tk.Label(settings_window, text='Sync after: (seconds)')
+    slider_label.place(width=130, height=15, x=10, y=60)
     slider_label.config(bg=BACKGROUND_COLOR, fg='white')
 
     slider = tk.Scale(settings_window, from_=1, to=30, orient=tk.HORIZONTAL)
     slider.place(width=200, height=50, x=190, y=40)
     slider.config(bg=BACKGROUND_COLOR, fg='white', highlightthickness=0, troughcolor=BUTTON_BACKGROUND, activebackground=BACKGROUND_COLOR)
     slider.set(global_settings['sync_frequency'])
-    
-    startup_label = tk.Label(settings_window, text='Run at startup:')
-    startup_label.place(width=100, height=15, x=2, y=100)
-    startup_label.config(bg=BACKGROUND_COLOR, fg='white')
-
-    var1 = tk.IntVar()
-    if global_settings['on_startup'] == True:
-        var1.set(1)
-    else:
-        var1.set(0)
-
-    checkbox1 = tk.Checkbutton(settings_window, variable=var1)
-    checkbox1.place(width=20, height=20, x=190, y=100)
-    checkbox1.config(bg=BACKGROUND_COLOR, activebackground=BACKGROUND_COLOR)
-    
-    # print("on_startup = " + str(global_settings['on_startup']))
-    # print("current value = " + str(bool(var1.get())))
-
-    # if global_settings['on_startup'] == True and bool(var1.get()) == False:
-    #     print("Toggling...")
-    #     checkbox1.toggle()
-    #     print("New value = " + str(bool(var1.get())))
-    
-    # elif global_settings['on_startup'] == False and bool(var1.get()) == True:
-    #     print("Toggling...")
-    #     checkbox1.toggle()
-    #     print("New value = " + str(bool(var1.get())))
-
 
 
     def settings_onclose():
         global_settings['sync_frequency'] = slider.get()
-        global_settings['on_startup'] = bool(var1.get())
         write_settings()
         settings_window.destroy()
 
@@ -241,7 +211,7 @@ def showSettings():
 def write_settings():
     """Write settings to settings.txt"""
     settings_file = open('settings.txt', 'w')
-    line = "sync_frequency: " + str(global_settings['sync_frequency']) + "\non_startup: " + str(global_settings['on_startup'])
+    line = "sync_frequency: " + str(global_settings['sync_frequency'])
     settings_file.write(line)
     settings_file.close()
 
@@ -249,12 +219,7 @@ def read_settings():
     """Read settings from settings.txt"""
     settings_file = open('settings.txt', 'r')
     lines = settings_file.readlines()
-    global_settings['sync_frequency'] = lines[0][lines[0].find(' ')+1:-1]
-    
-    if lines[1][lines[1].find(' ')+1:] == "True":
-        global_settings['on_startup'] = True
-    else:
-        global_settings['on_startup'] = False
+    global_settings['sync_frequency'] = lines[0][lines[0].find(' ')+1:]
     settings_file.close()
 
 #-----------------BUTTONS OF THE GUI-------------------------------------------------
