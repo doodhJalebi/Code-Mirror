@@ -86,7 +86,8 @@ class merkletree:
             lst = os.listdir(dir)
             # ... it'll make a list containing the names of the entries (file/es) in the directory given by path
             for i in lst:
-                if i != "__pycache__":
+                extension = os.path.splitext(i)[1]
+                if i != "__pycache__" and extension != '.docx' and extension != '.pdf':
                     temp.append(i)
             temp.sort()
         return temp
