@@ -30,14 +30,12 @@ global_settings = {
 def begin_mirror(global_settings, run):
     """Thread function that will start an event loop to check for changes in the MIRRORING flag and
     start/stop the process accordingly."""
-    print(run())
-    
     while True:
         
         if run():
             
             while True:
-                sleep(1)
+                sleep(global_settings['sync_frequency'])
                 mirror(global_settings['src_folder'], global_settings['dst_folder'])
                 update_src_listbox()
                 update_dst_listbox()
@@ -201,25 +199,63 @@ def showSettings():
     slider = tk.Scale(settings_window, from_=1, to=30, orient=tk.HORIZONTAL)
     slider.place(width=200, height=50, x=190, y=40)
     slider.config(bg=BACKGROUND_COLOR, fg='white', highlightthickness=0, troughcolor=BUTTON_BACKGROUND, activebackground=BACKGROUND_COLOR)
+    slider.set(global_settings['sync_frequency'])
     
     startup_label = tk.Label(settings_window, text='Run at startup:')
     startup_label.place(width=100, height=15, x=2, y=100)
     startup_label.config(bg=BACKGROUND_COLOR, fg='white')
 
     var1 = tk.IntVar()
+    if global_settings['on_startup'] == True:
+        var1.set(1)
+    else:
+        var1.set(0)
+
     checkbox1 = tk.Checkbutton(settings_window, variable=var1)
     checkbox1.place(width=20, height=20, x=190, y=100)
     checkbox1.config(bg=BACKGROUND_COLOR, activebackground=BACKGROUND_COLOR)
+    
+    # print("on_startup = " + str(global_settings['on_startup']))
+    # print("current value = " + str(bool(var1.get())))
+
+    # if global_settings['on_startup'] == True and bool(var1.get()) == False:
+    #     print("Toggling...")
+    #     checkbox1.toggle()
+    #     print("New value = " + str(bool(var1.get())))
+    
+    # elif global_settings['on_startup'] == False and bool(var1.get()) == True:
+    #     print("Toggling...")
+    #     checkbox1.toggle()
+    #     print("New value = " + str(bool(var1.get())))
 
 
 
     def settings_onclose():
         global_settings['sync_frequency'] = slider.get()
         global_settings['on_startup'] = bool(var1.get())
+        write_settings()
         settings_window.destroy()
 
     settings_window.protocol("WM_DELETE_WINDOW", settings_onclose)
 
+def write_settings():
+    """Write settings to settings.txt"""
+    settings_file = open('settings.txt', 'w')
+    line = "sync_frequency: " + str(global_settings['sync_frequency']) + "\non_startup: " + str(global_settings['on_startup'])
+    settings_file.write(line)
+    settings_file.close()
+
+def read_settings():
+    """Read settings from settings.txt"""
+    settings_file = open('settings.txt', 'r')
+    lines = settings_file.readlines()
+    global_settings['sync_frequency'] = lines[0][lines[0].find(' ')+1:-1]
+    
+    if lines[1][lines[1].find(' ')+1:] == "True":
+        global_settings['on_startup'] = True
+    else:
+        global_settings['on_startup'] = False
+    settings_file.close()
 
 #-----------------BUTTONS OF THE GUI-------------------------------------------------
 src_button = tk.Button(frameC, text='Choose Source', command=choose_src)
@@ -301,6 +337,14 @@ about_button.config(bg=BACKGROUND_COLOR, fg='white', relief=tk.FLAT, activebackg
 src_label.config(bg=BACKGROUND_COLOR, fg='white')
 dst_label.config(bg=BACKGROUND_COLOR, fg='white')
 
+#-----------------READ SETTINGS-----------------
+if 'settings.txt' in listdir():
+    # Settings file already exists
+    read_settings()
+
+else:
+    # Settings file does not exist. Create a new one.
+    write_settings()
 
 #----- Mainloop ------
 window.mainloop()

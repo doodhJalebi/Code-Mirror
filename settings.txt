@@ -1,0 +1,2 @@
+sync_frequency: 13
+on_startup: False
