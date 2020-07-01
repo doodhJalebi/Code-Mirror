@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 
 
 # a_dir = r"C:\Users\User\Desktop\Niha\DS2-project\New folder"
-# b_dir = r"C:\Users\User\Desktop\Niha\DS2-project\folder\b"
 
 # start_time = time.time()
 # MT_a = merkletree(a_dir)
