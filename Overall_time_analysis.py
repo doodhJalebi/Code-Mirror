@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 
 
 # Values of x and y are plotted after testing each case
-# y-axis values 
+# x-axis values 
 x =  [0,100,200,300,400,500, 600, 700, 800, 900, 1000]
 # y-axis values 
 y =  [1.008073091506958,1.0302975177764893,3.9004528522491455,6.805618524551392,6.246065139770508,
