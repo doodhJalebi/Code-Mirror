@@ -1,4 +1,4 @@
-from mirror import *
+# from mirror import *
 import matplotlib.pyplot as plt
 
 
@@ -25,11 +25,11 @@ y =  [1.008073091506958,1.0302975177764893,3.9004528522491455,6.805618524551392,
  18.9206485748291]
   
 # plotting points as a scatter plot 
-plt.scatter(x, y, label= "Time Taken Per n Files", color= "red",  
-            marker= "*", s=30) 
+plt.plot(x, y, label= "Time Taken Per n Files", color= "red",  
+            marker= "*") 
   
 # y-axis label 
-plt.ylabel('Time Taken In Mirroring') 
+plt.ylabel('Time Taken In Mirroring (in seconds)') 
 # x-axis label 
 plt.xlabel('Number of Files in Source Folder') 
 # plot title 
